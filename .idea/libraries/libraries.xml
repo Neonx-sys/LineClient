@@ -1,0 +1,33 @@
+<component name="libraryTable">
+  <library name="libraries">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/libraries" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/glfw.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/glfw32.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/jemalloc.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/jemalloc32.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/lwjgl.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/lwjgl32.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/lwjgl_opengl.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/lwjgl_opengl32.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/lwjgl_stb.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/lwjgl_stb32.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/lwjgl_tinyfd.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/lwjgl_tinyfd32.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/OpenAL.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/OpenAL32.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/SAPIWrapper_x64.dll" />
+      <root url="jar://$PROJECT_DIR$/libraries/lwjgl-3.2.2-natives-windows.zip!/e7fa3dbce77773e9677c52fa3a78c48f5ee49358/SAPIWrapper_x86.dll" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/libraries/natives" />
+      <root url="file://$PROJECT_DIR$/libraries/natives" />
+    </NATIVE>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/libraries" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/libraries" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/libraries" recursive="false" type="SOURCES" />
+  </library>
+</component>
