@@ -235,8 +235,8 @@ import net.minecraft.world.storage.FolderName;
 import net.minecraft.world.storage.IServerConfiguration;
 import net.minecraft.world.storage.SaveFormat;
 import net.minecraft.world.storage.ServerWorldInfo;
-import im.rez.Client;
-import im.rez.ui.clickgui.ClickGUI;
+import line.lineclient.Client;
+import line.lineclient.ui.clickgui.ClickGUI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BooleanSupplier;
 
-import im.rez.Client;
+import line.lineclient.Client;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
@@ -60,7 +60,7 @@ public class Main
 
     public static void main(String[] p_main_0_)
     {
-        Client.userData = new Client.UserData("rez", "User", 1);
+        Client.userData = new Client.UserData("LineClient", "User", 1);
         OptionParser optionparser = new OptionParser();
         OptionSpec<Void> optionspec = optionparser.accepts("nogui");
         OptionSpec<Void> optionspec1 = optionparser.accepts("initSettings", "Initializes 'server.properties' and 'eula.txt', then quits");

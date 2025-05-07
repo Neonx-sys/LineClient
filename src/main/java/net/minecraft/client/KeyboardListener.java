@@ -39,8 +39,8 @@ import net.optifine.Config;
 import net.optifine.reflect.Reflector;
 import net.optifine.shaders.Shaders;
 import net.optifine.shaders.gui.GuiShaderOptions;
-import im.rez.module.Module;
-import im.rez.module.modules.ModuleManager;
+import line.lineclient.module.Module;
+import line.lineclient.module.modules.ModuleManager;
 
 public class KeyboardListener
 {

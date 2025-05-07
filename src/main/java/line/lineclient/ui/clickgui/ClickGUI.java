@@ -112,11 +112,11 @@ public class ClickGUI extends Screen {
         float textWidth = Fonts.gilroyBold[40].getWidth("LineClient");
         RenderUtils.drawShadow(x + 8, y + 12, textWidth + 5, 18, 36, themeColors[2].getColor().getRGB());
         Fonts.gilroyBold[40].drawString(matrixStack, "LineClient", x + 10, y + 12, themeColors[2].getColor().getRGB());
-        float aboutWidth = Fonts.gilroyBold[20].getWidth("About our base");
+        float aboutWidth = Fonts.gilroyBold[20].getWidth("About cheat");
         RenderUtils.drawRoundedRect(x - 185, y + 5, aboutWidth + 90, 100, 5, themeColors[1].getColor());
         RenderUtils.drawShadow(x - 190, y + 2, aboutWidth + 100, 110, 10, themeColors[3].getColor().getRGB());
         RenderUtils.drawShadow(x - 142, y + 7, aboutWidth + 5, 15, 12, themeColors[1].getColor().getRGB());
-        Fonts.gilroyBold[20].drawString(matrixStack, "About our base", x - 140, y + 12, themeColors[2].getColor().getRGB());
+        Fonts.gilroyBold[20].drawString(matrixStack, "About cheat", x - 140, y + 12, themeColors[2].getColor().getRGB());
         float themeX = x + w + 10;
         float themeY = y;
         float themeW = 200;
@@ -185,7 +185,7 @@ public class ClickGUI extends Screen {
                     lastOpenedColor = color.isOpen() ? color : null;
                     savedOpenColorName = color.isOpen() ? color.getName() : null;
                 }
-                
+
                 if (color.isOpen()) {
                     float pickerX = colorX;
                     float pickerY = colorY + 20;
@@ -266,7 +266,11 @@ public class ClickGUI extends Screen {
         Fonts.icons[20].drawString(matrixStack, "A", x - 180, y + 33, themeColors[2].getColor().getRGB());
         Fonts.gilroy[20].drawString(matrixStack, "Latest update: 27.11.2024", x - 165, y + 32.5f, themeColors[2].getColor().getRGB());
         Fonts.icons[20].drawString(matrixStack, "W", x - 180, y + 48, themeColors[2].getColor().getRGB());
-        Fonts.gilroy[20].drawString(matrixStack, "Coders: r3z (rez) and exlenty", x - 165, y + 47.5f, themeColors[2].getColor().getRGB());
+        Fonts.gilroy[20].drawString(matrixStack, "Coders: ", x - 165, y + 47.5f, themeColors[2].getColor().getRGB());
+        Fonts.gilroy[20].drawString(matrixStack, "NeonX-sys", x - 165, y + 62.5f, themeColors[2].getColor().getRGB());
+        Fonts.gilroy[20].drawString(matrixStack, "Sandal", x - 165, y + 77.5f, themeColors[2].getColor().getRGB());
+
+
         Fonts.gilroyBold[15].drawString(matrixStack, "Основные", x + 5, y + 40, themeColors[2].getColor().getRGB());
         Fonts.gilroyBold[15].drawString(matrixStack, "Другие", x + 5, y + 40 + 22 + 22 + 22 + 22 + 14, themeColors[2].getColor().getRGB());
         for (Category cat : Category.values()) {
@@ -331,7 +335,8 @@ public class ClickGUI extends Screen {
                     animationProgress = RenderUtils.animate(1, animationProgress, 0.035f);
                     int alpha = (int) (255 * animationProgress);
 
-                    Fonts.gilroyBold[15].drawString(matrixStack, "Настройки", x + 5, y + w - 130,
+                    Fonts.gilroyBold[15].drawString(matrixStack,
+                            "Настройки", x + 5, y + w - 130,
                             new Color(162, 162, 162, alpha).getRGB());
 
                     for (Setting e : m.getSettings()) {
@@ -612,7 +617,7 @@ public class ClickGUI extends Screen {
                     offsetmodule += 38;
                 }
             }
-            
+
             offset = 40;
             for (Category cat : Category.values()) {
                 if (ishover(x + 10, y + 10 + offset, 85, 20, mouseX, mouseY)) {
@@ -786,7 +791,7 @@ public class ClickGUI extends Screen {
         }
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
-    
+
     private static class ThemePreset {
         String name;
         Color[] colors;

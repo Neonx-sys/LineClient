@@ -5,5 +5,6 @@ public enum Category {
     MOVEMENT,
     RENDER,
     UTIL,
-    FAVORITE
+    FAVORITE,
+    AutoTotem
 }

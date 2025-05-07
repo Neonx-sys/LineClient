@@ -73,8 +73,8 @@ import net.optifine.CustomColors;
 import net.optifine.CustomItems;
 import net.optifine.TextureAnimations;
 import net.optifine.reflect.Reflector;
-import im.rez.event.Events;
-import im.rez.event.events.EventRender;
+import line.lineclient.event.Events;
+import line.lineclient.event.events.EventRender;
 
 public class IngameGui extends AbstractGui
 {

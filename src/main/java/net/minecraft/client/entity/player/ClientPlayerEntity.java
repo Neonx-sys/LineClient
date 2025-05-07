@@ -77,11 +77,11 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
-import im.rez.Client;
-import im.rez.commands.CommandManager;
-import im.rez.event.Events;
-import im.rez.event.events.EventRotation;
-import im.rez.event.events.EventTick;
+import line.lineclient.Client;
+import line.lineclient.commands.CommandManager;
+import line.lineclient.event.Events;
+import line.lineclient.event.events.EventRotation;
+import line.lineclient.event.events.EventTick;
 
 public class ClientPlayerEntity extends AbstractClientPlayerEntity
 {

@@ -101,30 +101,38 @@ public class HUD extends Module {
             }
 
             if (bps.get()) {
-                float textWidth = Fonts.icons[20].getWidth("#") + Fonts.gilroy[20].getWidth("BPS: " + getPlayerSpeed());
+                float textWidth = Fonts.icons[20].getWidth("#") + Fonts.gilroy[20].getWidth("BPS: " + getPlayerSpeedH());
                 Color bpsColor = new Color(ClickGUI.getThemeColors()[3].getColor().getRed(), ClickGUI.getThemeColors()[3].getColor().getGreen(), ClickGUI.getThemeColors()[3].getColor().getBlue(), (int)(bpsAlpha * 255));
                 Color shadowColor = new Color(ClickGUI.getThemeColors()[1].getColor().getRed(), ClickGUI.getThemeColors()[1].getColor().getGreen(), ClickGUI.getThemeColors()[1].getColor().getBlue(), (int)(bpsAlpha * 255));
 
-                RenderUtils.drawRoundedRect(bpsX, bpsY, textWidth + 10, 15, 5, bpsColor);
-
-                RenderUtils.drawShadow(bpsX, bpsY, textWidth + 10, 15, 6, shadowColor.getRGB());
-
-                Fonts.gilroy[20].drawString(((EventRender) e).getMatrixStack(), "BPS: " + getPlayerSpeed(), bpsX + 15, bpsY + 4, new Color(ClickGUI.getThemeColors()[4].getColor().getRed(), ClickGUI.getThemeColors()[4].getColor().getGreen(), ClickGUI.getThemeColors()[4].getColor().getBlue()).getRGB());
-
+                RenderUtils.drawRoundedRect(bpsX, bpsY, textWidth + 20, 15, 5, bpsColor);
+                RenderUtils.drawShadow(bpsX, bpsY, textWidth + 20, 15, 6, shadowColor.getRGB());
+                Fonts.gilroy[20].drawString(((EventRender) e).getMatrixStack(), "H BPS: " + getPlayerSpeedH(), bpsX + 15, bpsY + 4, new Color(ClickGUI.getThemeColors()[4].getColor().getRed(), ClickGUI.getThemeColors()[4].getColor().getGreen(), ClickGUI.getThemeColors()[4].getColor().getBlue()).getRGB());
                 Fonts.icons[17].drawString(((EventRender) e).getMatrixStack(), "#", bpsX + 3, bpsY + 5.5f, new Color(ClickGUI.getThemeColors()[4].getColor().getRed(), ClickGUI.getThemeColors()[4].getColor().getGreen(), ClickGUI.getThemeColors()[4].getColor().getBlue()).getRGB());
+
+                RenderUtils.drawRoundedRect(bpsX+80, bpsY, textWidth + 20, 15, 5, bpsColor);
+                RenderUtils.drawShadow(bpsX+80, bpsY, textWidth + 20, 15, 6, shadowColor.getRGB());
+                Fonts.gilroy[20].drawString(((EventRender) e).getMatrixStack(), "V BPS: " + getPlayerSpeedV(), bpsX + 95, bpsY + 4, new Color(ClickGUI.getThemeColors()[4].getColor().getRed(), ClickGUI.getThemeColors()[4].getColor().getGreen(), ClickGUI.getThemeColors()[4].getColor().getBlue()).getRGB());
+                Fonts.icons[17].drawString(((EventRender) e).getMatrixStack(), "#", bpsX + 83, bpsY + 5.5f, new Color(ClickGUI.getThemeColors()[4].getColor().getRed(), ClickGUI.getThemeColors()[4].getColor().getGreen(), ClickGUI.getThemeColors()[4].getColor().getBlue()).getRGB());
+
             }
+
         }
     }
 
-    private String getPlayerSpeed() {
+    private String getPlayerSpeedH() {
         double deltaX = mc.player.getPosX() - mc.player.prevPosX;
         double deltaZ = mc.player.getPosZ() - mc.player.prevPosZ;
-        double speed = Math.hypot(deltaX, deltaZ) * 20;
+        double HorizontalSpeed = Math.hypot(deltaX, deltaZ) * 20;
 
+        return String.format("%.2f", HorizontalSpeed);
+    }
+
+    private String getPlayerSpeedV() {
         double deltaY = mc.player.getPosY() - mc.player.prevPosY;
         double verticalSpeed = Math.abs(deltaY) * 20;
 
-        return String.format("%.2f", speed);
+        return String.format("%.2f", verticalSpeed);
     }
 
     private void handleDrag(int mouseX, int mouseY) {
@@ -151,7 +159,7 @@ public class HUD extends Module {
         }
 
         if (bps.get()) {
-            float bpsWidth = Fonts.icons[20].getWidth("#") + Fonts.gilroy[20].getWidth("BPS: " + getPlayerSpeed()) + 10;
+            float bpsWidth = Fonts.icons[20].getWidth("#") + Fonts.gilroy[20].getWidth("BPS: " + getPlayerSpeedH()) + 10;
             if (isHovered(bpsX, bpsY, bpsWidth, 15, mouseX, mouseY)) {
                 if (GLFW.glfwGetMouseButton(mc.getMainWindow().getHandle(), GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS) {
                     if (!isDraggingBps) {

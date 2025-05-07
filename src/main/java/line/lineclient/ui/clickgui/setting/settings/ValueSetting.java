@@ -1,63 +1,66 @@
 package line.lineclient.ui.clickgui.setting.settings;
 
-
 import line.lineclient.ui.clickgui.setting.Setting;
 
 public class ValueSetting extends Setting {
+    private float value;
+    private float minimum;
+    private float maximum;
+    private float increment;
+    private boolean dragging;
 
-    private float value, min, max, increment;
-    public boolean dragged = false;
-
-    public ValueSetting(String name, float value, float min, float max, float increment) {
+    public ValueSetting(String name, float value, float minimum, float maximum, float increment) {
         this.setName(name);
-        this.min = min;
-        this.max = max;
+        this.value = value;
+        this.minimum = minimum;
+        this.maximum = maximum;
         this.increment = increment;
-        setValue(value);
         this.setVisibility(() -> true);
     }
 
-    public void setDragged(boolean dragged) {
-        this.dragged = dragged;
-    }
-
-    public void setMax(float max) {
-        this.max = max;
-        if (value > max) {
-            value = max;
-        }
-    }
-
-    public void setMin(float min) {
-        this.min = min;
-        if (value < min) {
-            value = min;
-        }
+    public float getValue() {
+        return value;
     }
 
     public void setValue(float value) {
-        if (value < min) {
-            this.value = min;
-        } else if (value > max) {
-            this.value = max;
-        } else {
-            this.value = value;
-        }
+        value = Math.round(Math.max(minimum, Math.min(maximum, value)) * (1.0f / increment)) / (1.0f / increment);
+        this.value = value;
     }
 
-    public float getMax() {
-        return max;
+    public float getMinimum() {
+        return minimum;
     }
 
-    public float getMin() {
-        return min;
+    public void setMinimum(float minimum) {
+        this.minimum = minimum;
+    }
+
+    public float getMaximum() {
+        return maximum;
+    }
+
+    public void setMaximum(float maximum) {
+        this.maximum = maximum;
     }
 
     public float getIncrement() {
         return increment;
     }
 
-    public float getValue() {
-        return value;
+    public void setIncrement(float increment) {
+        this.increment = increment;
+    }
+
+    public boolean isDragging() {
+        return dragging;
+    }
+
+    public void setDragging(boolean dragging) {
+        this.dragging = dragging;
+    }
+
+    // Додаємо метод для отримання відсотків
+    public float getPercentage() {
+        return ((value - minimum) / (maximum - minimum));
     }
 }

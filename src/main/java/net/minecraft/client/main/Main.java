@@ -31,7 +31,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.Session;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Bootstrap;
-import im.rez.Client;
+import line.lineclient.Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,7 +41,7 @@ public class Main
 
     public static void main(String[] p_main_0_)
     {
-        Client.userData = new Client.UserData("rez", "User", 1);
+        Client.userData = new Client.UserData("LineClient", "User", 1);
         OptionParser optionparser = new OptionParser();
         optionparser.allowsUnrecognizedOptions();
         optionparser.accepts("demo");
