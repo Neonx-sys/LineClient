@@ -1,5 +1,5 @@
 version:2586
-autoJump:true
+autoJump:false
 autoSuggestions:true
 chatColors:true
 chatLinks:true
@@ -33,7 +33,7 @@ graphicsMode:0
 ao:2
 biomeBlendRadius:2
 renderClouds:fast
-resourcePacks:[]
+resourcePacks:["vanilla"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us

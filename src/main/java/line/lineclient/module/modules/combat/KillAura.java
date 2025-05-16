@@ -14,8 +14,8 @@ import line.lineclient.utils.fonts.Fonts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Hand;
-
 import java.awt.Color;
+import line.lineclient.module.modules.util.FriendManager;
 
 import static line.lineclient.utils.Wrapper.mc;
 
@@ -63,7 +63,8 @@ public class KillAura extends Module {
 
                         if (target != mc.player &&
                                 target.isAlive() &&
-                                mc.player.getDistance(target) <= range.getValue()) {
+                                mc.player.getDistance(target) <= range.getValue() &&
+                                !FriendManager.isFriend(target.getName().getString())) {  // Додана перевірка
 
                             mc.playerController.attackEntity(mc.player, target);
                             mc.player.swingArm(Hand.MAIN_HAND);

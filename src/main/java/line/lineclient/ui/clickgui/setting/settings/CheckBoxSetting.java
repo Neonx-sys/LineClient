@@ -26,7 +26,14 @@ public class CheckBoxSetting extends Setting {
     }
 
     public void setValue(boolean b) {
+        this.value = b;
+    }
 
+    public boolean isEnabled() {
+        return this.value;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.value = enabled;
     }
 }
-

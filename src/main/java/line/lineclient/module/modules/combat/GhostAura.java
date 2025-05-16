@@ -25,7 +25,7 @@ public class GhostAura extends Module {
     private final long attackDelay = 10;
 
     public GhostAura() {
-        super("GhostAura", Category.COMBAT, "Tp to nearby enemy and attacks", -1, 1);
+        super("GhostAura|Beta", Category.COMBAT, "Tp to nearby enemy and attacks", -1, 1);
         addSetting(mode);
     }
 
