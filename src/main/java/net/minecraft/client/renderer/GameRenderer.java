@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 import javax.annotation.Nullable;
+
+import line.lineclient.module.modules.render.XRay;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -645,6 +647,8 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
             {
                 this.mc.getProfiler().startSection("level");
                 this.renderWorld(partialTicks, nanoTime, new MatrixStack());
+
+                XRay.render(partialTicks);
 
                 if (this.mc.isSingleplayer() && this.timeWorldIcon < Util.milliTime() - 1000L)
                 {

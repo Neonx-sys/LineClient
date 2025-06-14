@@ -5,9 +5,7 @@ import line.lineclient.module.modules.combat.AutoTotem;
 import line.lineclient.module.modules.combat.GhostAura;
 import line.lineclient.module.modules.combat.KillAura;
 import line.lineclient.module.modules.movement.Speed;
-import line.lineclient.module.modules.render.ESP;
-import line.lineclient.module.modules.render.HUD;
-import line.lineclient.module.modules.render.Test;
+import line.lineclient.module.modules.render.*;
 import line.lineclient.module.modules.util.AutoBuy;
 import line.lineclient.module.modules.movement.*;
 import line.lineclient.module.modules.util.FastBreak;
@@ -26,6 +24,8 @@ public class ModuleManager {
     public static Spider spider = new Spider();
     public static FastBreak fastBreak = new FastBreak();
     public static ESP ESP = new ESP();
+    public static NoRender noRender = new NoRender();
+    public static XRay xRay = new XRay();
 
     public static void ModulesRegistry(){
         add(test);
@@ -38,6 +38,8 @@ public class ModuleManager {
         add(spider);
         add(fastBreak);
         add(ESP);
+        add(noRender);
+        add(xRay);
     }
 
     static void add(Module m) {

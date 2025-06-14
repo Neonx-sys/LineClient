@@ -1,6 +1,7 @@
 package line.lineclient.ui.clickgui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import line.lineclient.ui.clickgui.setting.settings.CheckButtonSetting;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -112,11 +113,13 @@ public class ClickGUI extends Screen {
         float textWidth = Fonts.gilroyBold[40].getWidth("LineClient");
         RenderUtils.drawShadow(x + 8, y + 12, textWidth + 5, 18, 36, themeColors[2].getColor().getRGB());
         Fonts.gilroyBold[40].drawString(matrixStack, "LineClient", x + 10, y + 12, themeColors[2].getColor().getRGB());
-        float aboutWidth = Fonts.gilroyBold[20].getWidth("About cheat");
-        RenderUtils.drawRoundedRect(x - 185, y + 5, aboutWidth + 90, 100, 5, themeColors[1].getColor());
-        RenderUtils.drawShadow(x - 190, y + 2, aboutWidth + 100, 110, 10, themeColors[3].getColor().getRGB());
-        RenderUtils.drawShadow(x - 142, y + 7, aboutWidth + 5, 15, 12, themeColors[1].getColor().getRGB());
-        Fonts.gilroyBold[20].drawString(matrixStack, "About cheat", x - 140, y + 12, themeColors[2].getColor().getRGB());
+        RenderUtils.drawRoundedRect(x - 190, y , 180, 295, 5, themeColors[1].getColor());
+        RenderUtils.drawShadow(x - 195, y -2, 190, 305, 10, themeColors[3].getColor().getRGB());
+
+        Fonts.gilroyBold[25].drawString(matrixStack,
+                "Настройки", x-180 , y+8,
+                themeColors[2].getColor().getRGB());
+
         float themeX = x + w + 10;
         float themeY = y;
         float themeW = 200;
@@ -263,14 +266,6 @@ public class ClickGUI extends Screen {
         if (rightButton) rightButton = false;
         if (middleButton) middleButton = false;
 
-        Fonts.icons[20].drawString(matrixStack, "A", x - 180, y + 33, themeColors[2].getColor().getRGB());
-        Fonts.gilroy[20].drawString(matrixStack, "Latest update: 27.11.2024", x - 165, y + 32.5f, themeColors[2].getColor().getRGB());
-        Fonts.icons[20].drawString(matrixStack, "W", x - 180, y + 48, themeColors[2].getColor().getRGB());
-        Fonts.gilroy[20].drawString(matrixStack, "Coders: ", x - 165, y + 47.5f, themeColors[2].getColor().getRGB());
-        Fonts.gilroy[20].drawString(matrixStack, "NeonX-sys", x - 165, y + 62.5f, themeColors[2].getColor().getRGB());
-        Fonts.gilroy[20].drawString(matrixStack, "Sandal", x - 165, y + 77.5f, themeColors[2].getColor().getRGB());
-
-
         Fonts.gilroyBold[15].drawString(matrixStack, "Основные", x + 5, y + 40, themeColors[2].getColor().getRGB());
         Fonts.gilroyBold[15].drawString(matrixStack, "Другие", x + 5, y + 40 + 22 + 22 + 22 + 22 + 14, themeColors[2].getColor().getRGB());
         for (Category cat : Category.values()) {
@@ -324,6 +319,7 @@ public class ClickGUI extends Screen {
 
         for (Module m : ModuleManager.getModules()) {
             if (m.isSetting()) {
+
                 if (activeModule != m) {
                     activeModule = m;
                     animationProgress = 0;
@@ -332,55 +328,71 @@ public class ClickGUI extends Screen {
                 settingsCount = m.getSettings().size();
 
                 if (settingsCount > 0) {
+
                     animationProgress = RenderUtils.animate(1, animationProgress, 0.035f);
                     int alpha = (int) (255 * animationProgress);
-
-                    Fonts.gilroyBold[15].drawString(matrixStack,
-                            "Настройки", x + 5, y + w - 130,
-                            new Color(162, 162, 162, alpha).getRGB());
 
                     for (Setting e : m.getSettings()) {
                         float settingOffset = settOffset * animationProgress;
 
                         if (e instanceof CheckBoxSetting) {
-                            RenderUtils.drawShadow(x + 10, y + w - 121 + settingOffset, 10, 10, 10,
+                            RenderUtils.drawShadow(x - 180, y + 25 + settingOffset, 10, 10, 10,
                                     ((CheckBoxSetting) e).isValue() ? themeColors[0].getColor().getRGB() : themeColors[1].getColor().getRGB());
-                            RenderUtils.drawRoundedRect(x + 10, y + w - 121 + settingOffset, 10, 10, 5,
+                            RenderUtils.drawRoundedRect(x - 180, y + 25 + settingOffset, 10, 10, 5,
                                     ((CheckBoxSetting) e).get() ? themeColors[0].getColor() : themeColors[1].getColor());
-                            Fonts.gilroy[14].drawString(matrixStack, e.getName(), x + 25, y + w - 118 + settingOffset,
+                            Fonts.gilroy[14].drawString(matrixStack, e.getName(), x - 165, y + 28 + settingOffset,
                                     new Color(255, 255, 255, alpha).getRGB());
 
-                            if (ishover(x + 10, y + w - 121 + settingOffset, 10, 10, mouseX, mouseY) && leftButton) {
+                            if (ishover(x - 180, y + 25 + settingOffset, 10, 10, mouseX, mouseY) && leftButton) {
                                 ((CheckBoxSetting) e).setValue(!((CheckBoxSetting) e).get());
                             }
                             settOffset += 15;
 
-                        } else if (e instanceof ValueSetting) {
-                            RenderUtils.drawShadow(x + 10, y + w - 121 + settingOffset, 10, 10, 10, themeColors[0].getColor().getRGB());
-                            RenderUtils.drawRoundedRect(x + 10, y + w - 121 + settingOffset, 10, 10, 5, themeColors[0].getColor());
-                            RenderUtils.drawShadow(x + 10 + 30, y + w - 121 + settingOffset, 10, 10, 10, themeColors[0].getColor().getRGB());
-                            RenderUtils.drawRoundedRect(x + 10 + 30, y + w - 121 + settingOffset, 10, 10, 5, themeColors[0].getColor());
+                        }
 
-                            Fonts.gilroy[14].drawString(matrixStack, "+", x + 13, y + w - 117 + settingOffset,
-                                    new Color(255, 255, 255, alpha).getRGB());
-                            Fonts.gilroy[14].drawString(matrixStack, "-", x + 13 + 30, y + w - 117 + settingOffset,
-                                    new Color(255, 255, 255, alpha).getRGB());
-                            Fonts.gilroy[14].drawString(matrixStack, "" + ((ValueSetting) e).getValue(), x + 13 + 23 / 2 + 1,
-                                    y + w - 117 + settingOffset, new Color(255, 255, 255, alpha).getRGB());
-                            Fonts.gilroy[14].drawCenteredString(matrixStack, ((ValueSetting) e).getName(), x + 13 + 23 / 2 + 6,
-                                    y + w - 117 + settingOffset + 10, new Color(255, 255, 255, alpha).getRGB());
+                        else if (e instanceof CheckButtonSetting) {
+                            RenderUtils.drawShadow(x - 180, y + 25 + settingOffset,  Fonts.gilroy[20].getWidth(e.getName())+2, 12, 4,
+                                    ((CheckButtonSetting) e).isValue() ? themeColors[0].getColor().getRGB() : themeColors[1].getColor().getRGB());
 
-                            if (ishover(x + 10, y + w - 121 + settingOffset, 10, 10, mouseX, mouseY) && leftButton) {
+                            RenderUtils.drawRoundedRect(x - 180, y + 25 + settingOffset, Fonts.gilroy[20].getWidth(e.getName())+2, 12, 4,
+                                    ((CheckButtonSetting) e).get() ? themeColors[0].getColor() : themeColors[1].getColor());
+
+                            Fonts.gilroy[14].drawString(matrixStack, e.getName(), x - 180 + 15, y + 29 + settingOffset,
+                                    new Color(255, 255, 255, alpha).getRGB());
+
+                            if (ishover(x - 180, y + 25 + settingOffset, Fonts.gilroy[20].getWidth(e.getName())+2, 12, mouseX, mouseY) && leftButton) {
+                                ((CheckButtonSetting) e).setValue(!((CheckButtonSetting) e).get());
+                            }
+                            settOffset += 15;
+
+                        }
+
+                        else if (e instanceof ValueSetting) {
+                            RenderUtils.drawShadow(x - 180, y + 25 + settingOffset, 10, 10, 10, themeColors[0].getColor().getRGB());
+                            RenderUtils.drawRoundedRect(x - 180, y + 25 + settingOffset, 10, 10, 5, themeColors[0].getColor());
+                            RenderUtils.drawShadow(x - 180 + 20 + Fonts.gilroy[14].getWidth(""+((ValueSetting) e).getValue()), y + 25 + settingOffset, 10, 10, 10, themeColors[0].getColor().getRGB());
+                            RenderUtils.drawRoundedRect(x - 180 + 20 + Fonts.gilroy[14].getWidth(""+((ValueSetting) e).getValue()), y + 25 + settingOffset, 10, 10, 5, themeColors[0].getColor());
+
+                            Fonts.gilroy[14].drawString(matrixStack, "+", x - 180 + 3 , y + 29 + settingOffset,
+                                    new Color(255, 255, 255, alpha).getRGB());
+                            Fonts.gilroy[14].drawString(matrixStack, "-", x - 180 + 23 + Fonts.gilroy[14].getWidth(""+((ValueSetting) e).getValue()), y + 29 + settingOffset,
+                                    new Color(255, 255, 255, alpha).getRGB());
+                            Fonts.gilroy[14].drawString(matrixStack, "" + ((ValueSetting) e).getValue(), x - 180 + 2 + 23 / 2 + 1,
+                                    y + 28 + settingOffset, new Color(255, 255, 255, alpha).getRGB());
+                            Fonts.gilroy[14].drawCenteredString(matrixStack, ((ValueSetting) e).getName(), x - 180 + 5 + 23 / 2 + 6,
+                                    y + 28 + settingOffset + 10, new Color(255, 255, 255, alpha).getRGB());
+
+                            if (ishover(x - 180, y + 25 + settingOffset, 10, 10, mouseX, mouseY) && leftButton) {
                                 ((ValueSetting) e).setValue(((ValueSetting) e).getValue() + ((ValueSetting) e).getIncrement());
                             }
-                            if (ishover(x + 10 + 30, y + w - 121 + settingOffset, 10, 10, mouseX, mouseY) && leftButton) {
+                            if (ishover(x - 190 + 30, y + 25 + settingOffset, 10, 10, mouseX, mouseY) && leftButton) {
                                 ((ValueSetting) e).setValue(((ValueSetting) e).getValue() - ((ValueSetting) e).getIncrement());
                             }
                             settOffset += 25;
 
                         } else if (e instanceof ColorSetting) {
                             ColorSetting colorSetting = (ColorSetting) e;
-                            float colorX = x + 10;
+                            float colorX = x - 180;
                             float colorY = y + w - 121 + settingOffset;
 
                             RenderUtils.drawShadow(colorX, colorY, 40, 15, 10, themeColors[0].getColor().getRGB());
@@ -675,21 +687,29 @@ public class ClickGUI extends Screen {
                             }
                         }
                         if (e instanceof CheckBoxSetting) {
-                            if (ishover(x + 10, y + w - 121 + settOffset, 10, 10, mouseX, mouseY)) {
+                            if (ishover(x - 180, y + 28 + settOffset, 10, 10, mouseX, mouseY)) {
                                 ((CheckBoxSetting) e).setValue(!((CheckBoxSetting) e).get());
                                 return true;
                             }
                             settOffset += 15;
-                        } else if (e instanceof ValueSetting) {
-                            if (ishover(x + 10, y + w - 121 + settOffset, 10, 10, mouseX, mouseY)) {
+                        }
+                        else if (e instanceof ValueSetting) {
+                            if (ishover(x - 180, y + 28 + settOffset, 10, 10, mouseX, mouseY)) {
                                 ((ValueSetting) e).setValue(((ValueSetting) e).getValue() + ((ValueSetting) e).getIncrement());
                                 return true;
                             }
-                            if (ishover(x + 10 + 30, y + w - 121 + settOffset, 10, 10, mouseX, mouseY)) {
+                            if (ishover(x - 180 + 20 + Fonts.gilroy[14].getWidth(""+((ValueSetting) e).getValue()), y + 28 + settOffset, 10, 10, mouseX, mouseY)) {
                                 ((ValueSetting) e).setValue(((ValueSetting) e).getValue() - ((ValueSetting) e).getIncrement());
                                 return true;
                             }
                             settOffset += 25;
+                        }
+                        else if (e instanceof CheckButtonSetting) {
+                            if (ishover(x - 180, y + 28 + settOffset, Fonts.gilroy[20].getWidth(e.getName())+2, 10, mouseX, mouseY)) {
+                                ((CheckButtonSetting) e).setValue(!((CheckButtonSetting) e).get());
+                                return true;
+                            }
+                            settOffset += 15;
                         }
                     }
                 }

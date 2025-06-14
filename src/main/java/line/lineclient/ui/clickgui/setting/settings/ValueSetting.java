@@ -59,7 +59,6 @@ public class ValueSetting extends Setting {
         this.dragging = dragging;
     }
 
-    // Додаємо метод для отримання відсотків
     public float getPercentage() {
         return ((value - minimum) / (maximum - minimum));
     }

@@ -7,6 +7,7 @@ import line.lineclient.module.Category;
 import line.lineclient.module.Module;
 import line.lineclient.ui.clickgui.ClickGUI;
 import line.lineclient.ui.clickgui.setting.settings.CheckBoxSetting;
+import line.lineclient.ui.clickgui.setting.settings.CheckButtonSetting;
 import line.lineclient.ui.clickgui.setting.settings.ValueSetting;
 import line.lineclient.utils.fonts.Fonts;
 import line.lineclient.utils.render.RenderUtils;
@@ -30,7 +31,7 @@ public class ESP extends Module {
     private final CheckBoxSetting showNearestOnly = new CheckBoxSetting("Тільки найближчі", false);
     private final ValueSetting maxDistance = new ValueSetting("Макс. відстань", 20f, 1f, 50f, 1f);
     private final ValueSetting maxPlayers = new ValueSetting("Кількість гравців", 5f, 1f, 10f, 1f);
-    private final ValueSetting updateDelay = new ValueSetting("Затримка оновлення", 10f, 1f, 20f, 1f);
+    private final ValueSetting updateDelay = new ValueSetting("Затримка", 10f, 1f, 20f, 1f);
     private int tickCounter = 0;
     private List<PlayerInfo> playerInfoList = new ArrayList<>();
 
