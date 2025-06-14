@@ -1,0 +1,127 @@
+---- Minecraft Crash Report ----
+// Who set us up the TNT?
+
+Time: 5/19/25, 5:50 PM
+Description: Exception generating new chunk
+
+java.util.ConcurrentModificationException
+	at java.base/java.util.HashMap.computeIfAbsent(HashMap.java:1221)
+	at net.minecraft.world.gen.feature.template.TemplateManager.getTemplate(TemplateManager.java:61)
+	at net.minecraft.world.gen.feature.template.TemplateManager.getTemplateDefaulted(TemplateManager.java:47)
+	at com.mojang.datafixers.util.Either$Left.map(Either.java:38)
+	at net.minecraft.world.gen.feature.jigsaw.SingleJigsawPiece.func_236843_a_(SingleJigsawPiece.java:82)
+	at net.minecraft.world.gen.feature.jigsaw.SingleJigsawPiece.getBoundingBox(SingleJigsawPiece.java:117)
+	at net.minecraft.world.gen.feature.jigsaw.JigsawManager.func_242837_a(JigsawManager.java:45)
+	at net.minecraft.world.gen.feature.structure.JigsawStructure$Start.func_230364_a_(JigsawStructure.java:49)
+	at net.minecraft.world.gen.feature.structure.JigsawStructure$Start.func_230364_a_(JigsawStructure.java:35)
+	at net.minecraft.world.gen.feature.structure.Structure.func_242785_a(Structure.java:276)
+	at net.minecraft.world.gen.feature.StructureFeature.func_242771_a(StructureFeature.java:38)
+	at net.minecraft.world.gen.ChunkGenerator.func_242705_a(ChunkGenerator.java:285)
+	at net.minecraft.world.gen.ChunkGenerator.func_242707_a(ChunkGenerator.java:273)
+	at net.minecraft.world.chunk.ChunkStatus.lambda$static$2(ChunkStatus.java:48)
+	at net.minecraft.world.chunk.ChunkStatus.doGenerationWork(ChunkStatus.java:243)
+	at net.minecraft.world.server.ChunkManager.lambda$chunkGenerate$18(ChunkManager.java:674)
+	at com.mojang.datafixers.util.Either$Left.map(Either.java:38)
+	at net.minecraft.world.server.ChunkManager.lambda$chunkGenerate$20(ChunkManager.java:672)
+	at java.base/java.util.concurrent.CompletableFuture$UniCompose.tryFire(CompletableFuture.java:1150)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482)
+	at net.minecraft.world.chunk.ChunkTaskPriorityQueueSorter.lambda$func_219069_a$1(ChunkTaskPriorityQueueSorter.java:49)
+	at net.minecraft.util.concurrent.DelegatedTaskExecutor.driveOne(DelegatedTaskExecutor.java:120)
+	at net.minecraft.util.concurrent.DelegatedTaskExecutor.driveWhile(DelegatedTaskExecutor.java:180)
+	at net.minecraft.util.concurrent.DelegatedTaskExecutor.run(DelegatedTaskExecutor.java:136)
+	at java.base/java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1395)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec$$$capture(ForkJoinTask.java:373)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1182)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at java.base/java.util.HashMap.computeIfAbsent(HashMap.java:1221)
+	at net.minecraft.world.gen.feature.template.TemplateManager.getTemplate(TemplateManager.java:61)
+	at net.minecraft.world.gen.feature.template.TemplateManager.getTemplateDefaulted(TemplateManager.java:47)
+	at com.mojang.datafixers.util.Either$Left.map(Either.java:38)
+	at net.minecraft.world.gen.feature.jigsaw.SingleJigsawPiece.func_236843_a_(SingleJigsawPiece.java:82)
+	at net.minecraft.world.gen.feature.jigsaw.SingleJigsawPiece.getBoundingBox(SingleJigsawPiece.java:117)
+	at net.minecraft.world.gen.feature.jigsaw.JigsawManager.func_242837_a(JigsawManager.java:45)
+	at net.minecraft.world.gen.feature.structure.JigsawStructure$Start.func_230364_a_(JigsawStructure.java:49)
+	at net.minecraft.world.gen.feature.structure.JigsawStructure$Start.func_230364_a_(JigsawStructure.java:35)
+	at net.minecraft.world.gen.feature.structure.Structure.func_242785_a(Structure.java:276)
+	at net.minecraft.world.gen.feature.StructureFeature.func_242771_a(StructureFeature.java:38)
+	at net.minecraft.world.gen.ChunkGenerator.func_242705_a(ChunkGenerator.java:285)
+	at net.minecraft.world.gen.ChunkGenerator.func_242707_a(ChunkGenerator.java:273)
+	at net.minecraft.world.chunk.ChunkStatus.lambda$static$2(ChunkStatus.java:48)
+	at net.minecraft.world.chunk.ChunkStatus.doGenerationWork(ChunkStatus.java:243)
+
+-- Chunk to be generated --
+Details:
+	Location: 3,-43
+	Position hash: -184683593725
+	Generator: net.minecraft.world.gen.NoiseChunkGenerator@3e200b62
+Stacktrace:
+	at net.minecraft.world.server.ChunkManager.lambda$chunkGenerate$18(ChunkManager.java:674)
+	at com.mojang.datafixers.util.Either$Left.map(Either.java:38)
+	at net.minecraft.world.server.ChunkManager.lambda$chunkGenerate$20(ChunkManager.java:672)
+	at java.base/java.util.concurrent.CompletableFuture$UniCompose.tryFire(CompletableFuture.java:1150)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(CompletableFuture.java:482)
+	at net.minecraft.world.chunk.ChunkTaskPriorityQueueSorter.lambda$func_219069_a$1(ChunkTaskPriorityQueueSorter.java:49)
+	at net.minecraft.util.concurrent.DelegatedTaskExecutor.driveOne(DelegatedTaskExecutor.java:120)
+	at net.minecraft.util.concurrent.DelegatedTaskExecutor.driveWhile(DelegatedTaskExecutor.java:180)
+	at net.minecraft.util.concurrent.DelegatedTaskExecutor.run(DelegatedTaskExecutor.java:136)
+	at java.base/java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1395)
+
+-- Affected level --
+Details:
+	All players: 1 total; [ServerPlayerEntity['shieldthug_4'/15, l='ServerLevel[New World]', x=-273.30, y=60.00, z=-118.33]]
+	Chunk stats: ServerChunkCache: 5678
+	Level dimension: minecraft:the_nether
+	Derived: true
+	Level spawn location: World: (-80,4,96), Chunk: (at 0,0,0 in -5,6; contains blocks -80,0,96 to -65,255,111), Region: (-1,0; contains chunks -32,0 to -1,31, blocks -512,0,0 to -1,255,511)
+	Level time: 73351 game time, 22815 day time
+	Level name: New World
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: true
+	Level weather: Rain time: 129775 (now: false), thunder time: 101226 (now: false)
+	Known server brands: vanilla
+	Level was modded: true
+	Level storage version: 0x04ABD - Anvil
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:1015)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:937)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:106)
+	at net.minecraft.server.MinecraftServer.func_240802_v_(MinecraftServer.java:743)
+	at net.minecraft.server.MinecraftServer.lambda$func_240784_a_$0(MinecraftServer.java:234)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.16.5
+	Minecraft Version ID: 1.16.5
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 17.0.15, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Amazon.com Inc.
+	Memory: 1701937664 bytes (1623 MB) / 3357540352 bytes (3202 MB) up to 4257218560 bytes (4060 MB)
+	CPUs: 16
+	JVM Flags: 0 total; 
+	Player Count: 1 / 8; [ServerPlayerEntity['shieldthug_4'/15, l='ServerLevel[New World]', x=-273.30, y=60.00, z=-118.33]]
+	Data Packs: vanilla
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Very likely; Jar signature invalidated
+	OptiFine Version: OptiFine_1.16.5_HD_U_G8
+	OptiFine Build: ~~NULL~~
+	Render Distance Chunks: 27
+	Mipmaps: 4
+	Anisotropic Filtering: 1
+	Antialiasing: 0
+	Multitexture: false
+	Shaders: null
+	OpenGlVersion: 4.6.0 Compatibility Profile Context 24.3.1.240216
+	OpenGlRenderer: Radeon RX 580 Series
+	OpenGlVendor: ATI Technologies Inc.
+	CpuCount: 16

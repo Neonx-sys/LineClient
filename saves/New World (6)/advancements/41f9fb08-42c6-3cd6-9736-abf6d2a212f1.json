@@ -1,0 +1,57 @@
+{
+  "minecraft:recipes/transportation/acacia_boat": {
+    "criteria": {
+      "in_water": "2025-05-19 18:32:00 +0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/oak_boat": {
+    "criteria": {
+      "in_water": "2025-05-19 18:32:00 +0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/dark_oak_boat": {
+    "criteria": {
+      "in_water": "2025-05-19 18:32:00 +0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_by_something": "2025-05-19 18:31:22 +0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/birch_boat": {
+    "criteria": {
+      "in_water": "2025-05-19 18:32:00 +0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/jungle_boat": {
+    "criteria": {
+      "in_water": "2025-05-19 18:32:00 +0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/spruce_boat": {
+    "criteria": {
+      "in_water": "2025-05-19 18:32:00 +0300"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:forest": "2025-05-19 18:31:50 +0300",
+      "minecraft:mountains": "2025-05-19 18:31:30 +0300",
+      "minecraft:taiga": "2025-05-19 18:31:24 +0300",
+      "minecraft:birch_forest": "2025-05-19 18:32:19 +0300",
+      "minecraft:river": "2025-05-19 18:32:17 +0300",
+      "minecraft:wooded_mountains": "2025-05-19 18:31:41 +0300",
+      "minecraft:plains": "2025-05-19 18:22:33 +0300"
+    },
+    "done": false
+  },
+  "DataVersion": 2586
+}
