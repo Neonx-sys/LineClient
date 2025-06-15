@@ -26,6 +26,7 @@ public class ModuleManager {
     public static ESP ESP = new ESP();
     public static NoRender noRender = new NoRender();
     public static XRay xRay = new XRay();
+    public static HitParticles hitParticles = new HitParticles();
 
     public static void ModulesRegistry(){
         add(test);
@@ -40,6 +41,7 @@ public class ModuleManager {
         add(ESP);
         add(noRender);
         add(xRay);
+        add(hitParticles);
     }
 
     static void add(Module m) {
@@ -49,4 +51,5 @@ public class ModuleManager {
     public static ArrayList<Module> getModules() {
         return modules;
     }
+
 }

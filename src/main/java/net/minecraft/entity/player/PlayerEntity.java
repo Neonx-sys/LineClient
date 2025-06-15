@@ -107,8 +107,13 @@ import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import line.lineclient.module.modules.render.HitParticles;
+import line.lineclient.module.modules.ModuleManager;
+
 public abstract class PlayerEntity extends LivingEntity
 {
+    public static HitParticles hitParticles = new HitParticles();
+
     public static final EntitySize STANDING_SIZE = EntitySize.flexible(0.6F, 1.8F);
     private static final Map<Pose, EntitySize> SIZE_BY_POSE = ImmutableMap.<Pose, EntitySize>builder().put(Pose.STANDING, STANDING_SIZE).put(Pose.SLEEPING, SLEEPING_SIZE).put(Pose.FALL_FLYING, EntitySize.flexible(0.6F, 0.6F)).put(Pose.SWIMMING, EntitySize.flexible(0.6F, 0.6F)).put(Pose.SPIN_ATTACK, EntitySize.flexible(0.6F, 0.6F)).put(Pose.CROUCHING, EntitySize.flexible(0.6F, 1.5F)).put(Pose.DYING, EntitySize.fixed(0.2F, 0.2F)).build();
     private static final DataParameter<Float> ABSORPTION = EntityDataManager.createKey(PlayerEntity.class, DataSerializers.FLOAT);
@@ -1554,6 +1559,26 @@ public abstract class PlayerEntity extends LivingEntity
                         }
                     }
                 }
+
+                double x = targetEntity.getPosX();
+                double y = targetEntity.getPosYHeight(0.5D);
+                double z = targetEntity.getPosZ();
+
+                for (int i = 0; i < 50; i++) {
+                    double offsetX = (Math.random() - 0.5) * 2;  // розкид по X
+                    double offsetY = (Math.random() - 0.5) * 2;  // розкид по Y
+                    double offsetZ = (Math.random() - 0.5) * 2 ;  // розкид по Z
+                    double speedX = (Math.random() - 0.5);   // швидкість X
+                    double speedY = (Math.random() - 0.5);   // швидкість Y
+                    double speedZ = (Math.random() - 0.5);   // швидкість Z
+
+                    world.addParticle(
+                            ParticleTypes.ENCHANT,
+                            x + offsetX, y + offsetY, z + offsetZ,
+                            speedX, speedY, speedZ
+                    );
+                }
+
             }
         }
     }

@@ -368,29 +368,44 @@ public class ClickGUI extends Screen {
                         }
 
                         else if (e instanceof ValueSetting) {
-                            RenderUtils.drawShadow(x - 180, y + 25 + settingOffset, 10, 10, 10, themeColors[0].getColor().getRGB());
-                            RenderUtils.drawRoundedRect(x - 180, y + 25 + settingOffset, 10, 10, 5, themeColors[0].getColor());
-                            RenderUtils.drawShadow(x - 180 + 20 + Fonts.gilroy[14].getWidth(""+((ValueSetting) e).getValue()), y + 25 + settingOffset, 10, 10, 10, themeColors[0].getColor().getRGB());
-                            RenderUtils.drawRoundedRect(x - 180 + 20 + Fonts.gilroy[14].getWidth(""+((ValueSetting) e).getValue()), y + 25 + settingOffset, 10, 10, 5, themeColors[0].getColor());
+                            ValueSetting vs = (ValueSetting) e;
 
-                            Fonts.gilroy[14].drawString(matrixStack, "+", x - 180 + 3 , y + 29 + settingOffset,
-                                    new Color(255, 255, 255, alpha).getRGB());
-                            Fonts.gilroy[14].drawString(matrixStack, "-", x - 180 + 23 + Fonts.gilroy[14].getWidth(""+((ValueSetting) e).getValue()), y + 29 + settingOffset,
-                                    new Color(255, 255, 255, alpha).getRGB());
-                            Fonts.gilroy[14].drawString(matrixStack, "" + ((ValueSetting) e).getValue(), x - 180 + 2 + 23 / 2 + 1,
-                                    y + 28 + settingOffset, new Color(255, 255, 255, alpha).getRGB());
-                            Fonts.gilroy[14].drawCenteredString(matrixStack, ((ValueSetting) e).getName(), x - 180 + 5 + 23 / 2 + 6,
-                                    y + 28 + settingOffset + 10, new Color(255, 255, 255, alpha).getRGB());
+                            int sliderX = x - 180;
+                            int sliderY = (int) (y + 25 + settingOffset);
+                            int sliderWidth = 100;
+                            int sliderHeight = 10;
 
-                            if (ishover(x - 180, y + 25 + settingOffset, 10, 10, mouseX, mouseY) && leftButton) {
-                                ((ValueSetting) e).setValue(((ValueSetting) e).getValue() + ((ValueSetting) e).getIncrement());
+                            RenderUtils.drawShadow(sliderX, sliderY, sliderWidth, sliderHeight, 10, themeColors[0].getColor().getRGB());
+                            RenderUtils.drawRoundedRect(sliderX, sliderY, sliderWidth, sliderHeight, 5, themeColors[0].getColor());
+
+                            float normalized = vs.getPercentage();
+                            int handleX = sliderX + (int)(normalized * sliderWidth) - 5;
+                            int handleY = sliderY;
+
+                            RenderUtils.drawShadow(handleX, handleY, 10, 10, 10, themeColors[1].getColor().getRGB());
+                            RenderUtils.drawRoundedRect(handleX, handleY, 10, 10, 5, themeColors[1].getColor());
+
+                            Fonts.gilroy[14].drawCenteredString(matrixStack, vs.getName(), sliderX + sliderWidth / 2, sliderY + 3, new Color(255, 255, 255, alpha).getRGB());
+                            Fonts.gilroy[14].drawCenteredString(matrixStack, String.format("%.2f", vs.getValue()), sliderX + sliderWidth / 2, sliderY + sliderHeight + 5, new Color(255, 255, 255, alpha).getRGB());
+
+                            if (leftButton) {
+                                if (vs.isDragging() || ishover(handleX, handleY, 10, 10, mouseX, mouseY)) {
+                                    vs.setDragging(true);
+
+                                    float newNormalized = (float)(mouseX - sliderX) / sliderWidth;
+                                    newNormalized = Math.min(1.0f, Math.max(0.0f, newNormalized));
+
+                                    float newValue = vs.getMinimum() + newNormalized * (vs.getMaximum() - vs.getMinimum());
+                                    vs.setValue(newValue);
+                                }
+                            } else {
+                                vs.setDragging(false);
                             }
-                            if (ishover(x - 190 + 30, y + 25 + settingOffset, 10, 10, mouseX, mouseY) && leftButton) {
-                                ((ValueSetting) e).setValue(((ValueSetting) e).getValue() - ((ValueSetting) e).getIncrement());
-                            }
-                            settOffset += 25;
 
-                        } else if (e instanceof ColorSetting) {
+                            settOffset += 23;
+                        }
+
+                        else if (e instanceof ColorSetting) {
                             ColorSetting colorSetting = (ColorSetting) e;
                             float colorX = x - 180;
                             float colorY = y + w - 121 + settingOffset;
@@ -694,16 +709,49 @@ public class ClickGUI extends Screen {
                             settOffset += 15;
                         }
                         else if (e instanceof ValueSetting) {
-                            if (ishover(x - 180, y + 28 + settOffset, 10, 10, mouseX, mouseY)) {
-                                ((ValueSetting) e).setValue(((ValueSetting) e).getValue() + ((ValueSetting) e).getIncrement());
+                            ValueSetting vs = (ValueSetting) e;
+
+                            int sliderX = x - 180;
+                            int sliderY = y + 25 + settOffset;
+                            int sliderWidth = 100;
+                            int sliderHeight = 10;
+
+                            int plusX = sliderX + sliderWidth + 10;
+                            int plusY = sliderY - 3;
+                            int plusSize = 14;
+
+                            int minusX = sliderX - plusSize - 10;
+                            int minusY = sliderY - 3;
+                            int minusSize = 14;
+
+                            if (ishover(plusX, plusY, plusSize, plusSize, mouseX, mouseY) && leftButton) {
+                                vs.setValue(vs.getValue() + vs.getIncrement());
                                 return true;
                             }
-                            if (ishover(x - 180 + 20 + Fonts.gilroy[14].getWidth(""+((ValueSetting) e).getValue()), y + 28 + settOffset, 10, 10, mouseX, mouseY)) {
-                                ((ValueSetting) e).setValue(((ValueSetting) e).getValue() - ((ValueSetting) e).getIncrement());
+
+                            if (ishover(minusX, minusY, minusSize, minusSize, mouseX, mouseY) && leftButton) {
+                                vs.setValue(vs.getValue() - vs.getIncrement());
                                 return true;
                             }
-                            settOffset += 25;
+
+                            if (leftButton) {
+                                if (ishover(sliderX, sliderY, sliderWidth, sliderHeight, mouseX, mouseY) || vs.isDragging()) {
+                                    vs.setDragging(true);
+
+                                    float newNormalized = (float)(mouseX - sliderX) / sliderWidth;
+                                    newNormalized = Math.min(1.0f, Math.max(0.0f, newNormalized));
+
+                                    float newValue = vs.getMinimum() + newNormalized * (vs.getMaximum() - vs.getMinimum());
+                                    vs.setValue(newValue);
+                                    return true;
+                                }
+                            } else {
+                                vs.setDragging(false);
+                            }
+
+                            settOffset += 40;
                         }
+
                         else if (e instanceof CheckButtonSetting) {
                             if (ishover(x - 180, y + 28 + settOffset, Fonts.gilroy[20].getWidth(e.getName())+2, 10, mouseX, mouseY)) {
                                 ((CheckButtonSetting) e).setValue(!((CheckButtonSetting) e).get());

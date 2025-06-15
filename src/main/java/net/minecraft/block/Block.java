@@ -582,6 +582,7 @@ public class Block extends AbstractBlock implements IItemProvider
         return this;
     }
 
+
     public static final class RenderSideCacheKey
     {
         private final BlockState state;

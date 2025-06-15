@@ -1995,9 +1995,6 @@ public class WorldRenderer implements IResourceManagerReloadListener, AutoClosea
         RenderSystem.pushMatrix();
         RenderSystem.multMatrix(matrixStackIn.getLast().getMatrix());
 
-        MainWindow sr = mc.getMainWindow();
-        EventManager.call(new EventRender(partialTicks, matrixStackIn, sr, EventRender.Type.RENDER3D, matrix4f));
-
         if (this.mc.gameSettings.getCloudOption() != CloudOption.OFF)
         {
             if (this.field_239227_K_ != null)
