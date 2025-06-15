@@ -39,6 +39,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.SortedSet;
 import javax.annotation.Nullable;
+
+import line.lineclient.event.events.EventRender;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -46,6 +48,7 @@ import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.client.AbstractOption;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SimpleSound;
@@ -154,6 +157,7 @@ import net.optifine.util.RenderChunkUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
+import line.lineclient.event.events.EventManager;
 
 public class WorldRenderer implements IResourceManagerReloadListener, AutoCloseable
 {
@@ -1990,6 +1994,9 @@ public class WorldRenderer implements IResourceManagerReloadListener, AutoClosea
         GlStateManager.setFogAllowed(true);
         RenderSystem.pushMatrix();
         RenderSystem.multMatrix(matrixStackIn.getLast().getMatrix());
+
+        MainWindow sr = mc.getMainWindow();
+        EventManager.call(new EventRender(partialTicks, matrixStackIn, sr, EventRender.Type.RENDER3D, matrix4f));
 
         if (this.mc.gameSettings.getCloudOption() != CloudOption.OFF)
         {
