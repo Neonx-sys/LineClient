@@ -648,7 +648,8 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
                 this.mc.getProfiler().startSection("level");
                 this.renderWorld(partialTicks, nanoTime, new MatrixStack());
 
-                XRay.render(partialTicks);
+                MatrixStack matrixStack = new MatrixStack();
+                XRay.render(partialTicks, matrixStack);
 
                 if (this.mc.isSingleplayer() && this.timeWorldIcon < Util.milliTime() - 1000L)
                 {

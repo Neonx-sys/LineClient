@@ -3,8 +3,9 @@ package line.lineclient.utils.render;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -264,8 +265,62 @@ public class RenderUtils {
 
 
 
-    public static void drawBlockBox(BlockPos blockPos, int color) {
-        drawBox(new AxisAlignedBB(blockPos).offset(-mc.getRenderManager().info.getProjectedView().x, -mc.getRenderManager().info.getProjectedView().y, -mc.getRenderManager().info.getProjectedView().z), color);
+    public static void drawBlockBox(MatrixStack matrixStack, BlockPos pos, int color) {
+        Vector3d camPos = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
+
+        AxisAlignedBB box = new AxisAlignedBB(pos);
+
+        matrixStack.push();
+        matrixStack.translate(-camPos.x, -camPos.y, -camPos.z); // Один раз і правильно
+
+        float r = (color >> 16 & 0xFF) / 255.0F;
+        float g = (color >> 8 & 0xFF) / 255.0F;
+        float b = (color & 0xFF) / 255.0F;
+
+        RenderUtils.renderOutlinedBox(matrixStack, box, r, g, b, 1.0F);
+
+        matrixStack.pop();
+    }
+
+
+    public static void renderOutlinedBox(MatrixStack matrixStack, AxisAlignedBB box, float r, float g, float b, float alpha) {
+        IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+        IVertexBuilder builder = buffer.getBuffer(RenderType.getLines());
+
+        drawBoundingBox(matrixStack, builder, box, r, g, b, alpha);
+        buffer.finish(RenderType.getLines());
+    }
+
+
+    public static void drawBoundingBox(MatrixStack matrixStack, IVertexBuilder builder, AxisAlignedBB box, float red, float green, float blue, float alpha) {
+        Matrix4f matrix = matrixStack.getLast().getMatrix();
+
+        double x1 = box.minX;
+        double y1 = box.minY;
+        double z1 = box.minZ;
+        double x2 = box.maxX;
+        double y2 = box.maxY;
+        double z2 = box.maxZ;
+
+        addLine(builder, matrix, x1, y1, z1, x2, y1, z1, red, green, blue, alpha);
+        addLine(builder, matrix, x2, y1, z1, x2, y1, z2, red, green, blue, alpha);
+        addLine(builder, matrix, x2, y1, z2, x1, y1, z2, red, green, blue, alpha);
+        addLine(builder, matrix, x1, y1, z2, x1, y1, z1, red, green, blue, alpha);
+
+        addLine(builder, matrix, x1, y2, z1, x2, y2, z1, red, green, blue, alpha);
+        addLine(builder, matrix, x2, y2, z1, x2, y2, z2, red, green, blue, alpha);
+        addLine(builder, matrix, x2, y2, z2, x1, y2, z2, red, green, blue, alpha);
+        addLine(builder, matrix, x1, y2, z2, x1, y2, z1, red, green, blue, alpha);
+
+        addLine(builder, matrix, x1, y1, z1, x1, y2, z1, red, green, blue, alpha);
+        addLine(builder, matrix, x2, y1, z1, x2, y2, z1, red, green, blue, alpha);
+        addLine(builder, matrix, x2, y1, z2, x2, y2, z2, red, green, blue, alpha);
+        addLine(builder, matrix, x1, y1, z2, x1, y2, z2, red, green, blue, alpha);
+    }
+
+    private static void addLine(IVertexBuilder builder, Matrix4f matrix, double x1, double y1, double z1, double x2, double y2, double z2, float r, float g, float b, float a) {
+        builder.pos(matrix, (float)x1, (float)y1, (float)z1).color(r, g, b, a).endVertex();
+        builder.pos(matrix, (float)x2, (float)y2, (float)z2).color(r, g, b, a).endVertex();
     }
 
     public static void drawBox(AxisAlignedBB bb, int color) {

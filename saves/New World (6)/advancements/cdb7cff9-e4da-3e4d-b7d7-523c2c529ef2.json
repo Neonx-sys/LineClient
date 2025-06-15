@@ -115,6 +115,8 @@
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
+      "minecraft:mountains": "2025-06-15 13:03:57 +0300",
+      "minecraft:river": "2025-06-15 13:04:12 +0300",
       "minecraft:plains": "2025-06-14 14:41:09 +0300"
     },
     "done": false

@@ -68,7 +68,7 @@ public class XRay extends Module {
         }
     }
 
-    public static void render(float partialTicks) {
+    public static void render(float partialTicks, MatrixStack matrixStack) {
         if (!enabled || mc.world == null || mc.player == null) return;
 
         ClientWorld world = mc.world;
@@ -96,7 +96,7 @@ public class XRay extends Module {
 
                     if (enabledOres.getOrDefault(block, false)) {
                         int color = oreColors.getOrDefault(block, 0xFFFFFF);
-                        RenderUtils.drawBlockBox(pos, color);
+                        RenderUtils.drawBlockBox(matrixStack, pos, color);
                     }
                 }
             }
