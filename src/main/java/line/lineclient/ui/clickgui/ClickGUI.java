@@ -37,6 +37,9 @@ public class ClickGUI extends Screen {
     private float themeAnimationProgress = 0f;
     private final float COLLAPSED_HEIGHT = 40f;
     private final float EXPANDED_HEIGHT = 300f;
+    private boolean sliderDragging = false;
+    private boolean mouseButtonDown = false;
+    private boolean clicked = false;
 
 
 
@@ -55,6 +58,19 @@ public class ClickGUI extends Screen {
                 }
             }
         }
+    }
+
+    public boolean mouseClickedD(double mouseX, double mouseY, int button) {
+        if (button == 0) mouseButtonDown = true;
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    public boolean mouseReleasedD(double mouseX, double mouseY, int button) {
+        if (button == 0) {
+            mouseButtonDown = false;
+            sliderDragging = false;
+        }
+        return super.mouseReleased(mouseX, mouseY, button);
     }
 
     public static ColorSetting[] getThemeColors() {
@@ -388,22 +404,18 @@ public class ClickGUI extends Screen {
                             Fonts.gilroy[14].drawCenteredString(matrixStack, vs.getName(), sliderX + sliderWidth / 2, sliderY + 3, new Color(255, 255, 255, alpha).getRGB());
                             Fonts.gilroy[14].drawCenteredString(matrixStack, String.format("%.2f", vs.getValue()), sliderX + sliderWidth / 2, sliderY + sliderHeight + 5, new Color(255, 255, 255, alpha).getRGB());
 
-                            if (leftButton) {
-                                if (vs.isDragging() || ishover(handleX, handleY, 10, 10, mouseX, mouseY)) {
-                                    vs.setDragging(true);
+                            // Якщо перетягуємо, оновлюємо значення
+                            if (vs.isDragging()) {
+                                float newNormalized = (float)(mouseX - sliderX) / sliderWidth;
+                                newNormalized = Math.min(1.0f, Math.max(0.0f, newNormalized));
 
-                                    float newNormalized = (float)(mouseX - sliderX) / sliderWidth;
-                                    newNormalized = Math.min(1.0f, Math.max(0.0f, newNormalized));
-
-                                    float newValue = vs.getMinimum() + newNormalized * (vs.getMaximum() - vs.getMinimum());
-                                    vs.setValue(newValue);
-                                }
-                            } else {
-                                vs.setDragging(false);
+                                float newValue = vs.getMinimum() + newNormalized * (vs.getMaximum() - vs.getMinimum());
+                                vs.setValue(newValue);
                             }
 
                             settOffset += 23;
                         }
+
 
                         else if (e instanceof ColorSetting) {
                             ColorSetting colorSetting = (ColorSetting) e;
@@ -726,31 +738,34 @@ public class ClickGUI extends Screen {
 
                             if (ishover(plusX, plusY, plusSize, plusSize, mouseX, mouseY) && leftButton) {
                                 vs.setValue(vs.getValue() + vs.getIncrement());
-                                return true;
+                                clicked = true;
                             }
 
                             if (ishover(minusX, minusY, minusSize, minusSize, mouseX, mouseY) && leftButton) {
                                 vs.setValue(vs.getValue() - vs.getIncrement());
-                                return true;
+                                clicked = true;
                             }
 
-                            if (leftButton) {
-                                if (ishover(sliderX, sliderY, sliderWidth, sliderHeight, mouseX, mouseY) || vs.isDragging()) {
-                                    vs.setDragging(true);
+                            if (leftButton && ishover(sliderX, sliderY, sliderWidth, sliderHeight, mouseX, mouseY)) {
+                                vs.setDragging(true);
+                                clicked = true;
+                            }
 
-                                    float newNormalized = (float)(mouseX - sliderX) / sliderWidth;
-                                    newNormalized = Math.min(1.0f, Math.max(0.0f, newNormalized));
-
-                                    float newValue = vs.getMinimum() + newNormalized * (vs.getMaximum() - vs.getMinimum());
-                                    vs.setValue(newValue);
-                                    return true;
-                                }
-                            } else {
+                            if (!leftButton && vs.isDragging()) {
                                 vs.setDragging(false);
                             }
 
-                            settOffset += 40;
+                            if (vs.isDragging()) {
+                                float newNormalized = (float)(mouseX - sliderX) / sliderWidth;
+                                newNormalized = Math.max(0.0f, Math.min(1.0f, newNormalized));
+                                float newValue = vs.getMinimum() + newNormalized * (vs.getMaximum() - vs.getMinimum());
+                                vs.setValue(newValue);
+                                clicked = true;
+                            }
+
+                            settOffset += 23;
                         }
+
 
                         else if (e instanceof CheckButtonSetting) {
                             if (ishover(x - 180, y + 28 + settOffset, Fonts.gilroy[20].getWidth(e.getName())+2, 10, mouseX, mouseY)) {
@@ -778,7 +793,8 @@ public class ClickGUI extends Screen {
                     offsetmodule += 38;
                 }
             }
-        } else if (button == 2) {
+        }
+        else if (button == 2) {
             middleButton = true;
             int offsetmodule = 5;
             for (Module m : ModuleManager.getModules()) {
@@ -811,6 +827,16 @@ public class ClickGUI extends Screen {
                 }
             }
         }
+
+        if (activeModule != null) {
+            for (Setting setting : activeModule.getSettings()) {
+                if (setting instanceof ValueSetting) {
+                    ((ValueSetting) setting).setDragging(false);
+                }
+            }
+        }
+
+
 
         return super.mouseReleased(mouseX, mouseY, button);
     }

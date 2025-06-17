@@ -27,6 +27,10 @@ import net.optifine.util.PropertiesOrdered;
 
 public class ResourceLoadProgressGui extends LoadingGui
 {
+    private static final int BLACK_COLOR_OPAQUE = 0xFF000000;
+
+    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("minecraft", "textures/gui/title/background.png");
+
     private static final ResourceLocation MOJANG_LOGO_TEXTURE = new ResourceLocation("textures/gui/title/mojangstudios.png");
     private static final int field_238627_b_ = ColorHelper.PackedColor.packColor(255, 239, 50, 61);
     private static final int field_238628_c_ = field_238627_b_ & 16777215;
@@ -37,8 +41,8 @@ public class ResourceLoadProgressGui extends LoadingGui
     private float progress;
     private long fadeOutStart = -1L;
     private long fadeInStart = -1L;
-    private int colorBackground = field_238628_c_;
-    private int colorBar = field_238628_c_;
+    private int colorBackground = BLACK_COLOR_OPAQUE; // Цей колір більше не буде використовуватися для фону, але може бути важливим для інших частин, якщо вони його використовують
+    private int colorBar = BLACK_COLOR_OPAQUE;
     private int colorOutline = 16777215;
     private int colorProgress = 16777215;
     private GlBlendState blendState = null;
@@ -49,12 +53,15 @@ public class ResourceLoadProgressGui extends LoadingGui
         this.mc = p_i225928_1_;
         this.asyncReloader = p_i225928_2_;
         this.completedCallback = p_i225928_3_;
-        this.reloading = false;
+        this.reloading = p_i225928_4_; // Виправлено: передаємо значення reloading з параметрів
     }
 
     public static void loadLogoTexture(Minecraft mc)
     {
         mc.getTextureManager().loadTexture(MOJANG_LOGO_TEXTURE, new ResourceLoadProgressGui.MojangLogoTexture());
+        // Опційно: Завантажуємо кастомну фонову текстуру, щоб вона була готова
+        // Зауважте: може бути корисним додати сюди перевірку, чи текстура існує, щоб уникнути помилок, якщо файл відсутній.
+        mc.getTextureManager().loadTexture(BACKGROUND_TEXTURE, new SimpleTexture(BACKGROUND_TEXTURE));
     }
 
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
@@ -72,17 +79,21 @@ public class ResourceLoadProgressGui extends LoadingGui
         float f1 = this.fadeInStart > -1L ? (float)(k - this.fadeInStart) / 500.0F : -1.0F;
         float f2;
 
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+
+        this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
+
+        blit(matrixStack, 0, 0, i, j, 0.0F, 0.0F, 1, 1, i, j);
+
         if (f >= 1.0F)
         {
             this.fadeOut = true;
-
             if (this.mc.currentScreen != null)
             {
                 this.mc.currentScreen.render(matrixStack, 0, 0, partialTicks);
             }
-
-            int l = MathHelper.ceil((1.0F - MathHelper.clamp(f - 1.0F, 0.0F, 1.0F)) * 255.0F);
-            fill(matrixStack, 0, 0, i, j, this.colorBackground | l << 24);
             f2 = 1.0F - MathHelper.clamp(f - 1.0F, 0.0F, 1.0F);
         }
         else if (this.reloading)
@@ -91,14 +102,10 @@ public class ResourceLoadProgressGui extends LoadingGui
             {
                 this.mc.currentScreen.render(matrixStack, mouseX, mouseY, partialTicks);
             }
-
-            int i2 = MathHelper.ceil(MathHelper.clamp((double)f1, 0.15D, 1.0D) * 255.0D);
-            fill(matrixStack, 0, 0, i, j, this.colorBackground | i2 << 24);
             f2 = MathHelper.clamp(f1, 0.0F, 1.0F);
         }
         else
         {
-            fill(matrixStack, 0, 0, i, j, this.colorBackground | -16777216);
             f2 = 1.0F;
         }
 

@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import javax.annotation.Nullable;
+
+import line.lineclient.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FocusableGui;
 import net.minecraft.client.gui.FontRenderer;
@@ -71,6 +73,7 @@ public abstract class Screen extends FocusableGui implements IScreen, IRenderabl
     {
         return this.getTitle().getString();
     }
+
 
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
     {
@@ -401,6 +404,7 @@ public abstract class Screen extends FocusableGui implements IScreen, IRenderabl
 
     public void onClose()
     {
+
     }
 
     public void renderBackground(MatrixStack matrixStack)

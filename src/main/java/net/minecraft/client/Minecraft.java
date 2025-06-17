@@ -378,6 +378,9 @@ public class Minecraft extends RecursiveEventLoop<Runnable> implements ISnooperI
     private IProfileResult profilerResult;
     private String debugProfilerName = "root";
 
+    private float animationProgress = 0;
+    private float GUIAnimationProgress = 0;
+
     public Minecraft(GameConfiguration gameConfig)
     {
         super("Client");

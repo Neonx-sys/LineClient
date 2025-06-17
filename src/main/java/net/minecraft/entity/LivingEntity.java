@@ -18,6 +18,9 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.function.Predicate;
 import javax.annotation.Nullable;
+
+import line.lineclient.module.modules.ModuleManager;
+import line.lineclient.module.modules.render.HitParticles;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
@@ -27,6 +30,7 @@ import net.minecraft.block.HoneyBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.TrapDoorBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.arguments.EntityAnchorArgument;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -74,6 +78,7 @@ import net.minecraft.network.play.server.SCollectItemPacket;
 import net.minecraft.network.play.server.SEntityEquipmentPacket;
 import net.minecraft.network.play.server.SEntityStatusPacket;
 import net.minecraft.network.play.server.SSpawnMobPacket;
+import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
@@ -1191,6 +1196,34 @@ public abstract class LivingEntity extends Entity
      */
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
+        if (Minecraft.getInstance().player != null
+                && source.getTrueSource() == Minecraft.getInstance().player
+                && this != Minecraft.getInstance().player)
+        {
+            double x = this.getPosX();
+            double y = this.getPosYHeight(0.5D);
+            double z = this.getPosZ();
+
+            HitParticles hitParticles = ModuleManager.getHitParticlesModule();
+
+            List<BasicParticleType> selectedParticles = hitParticles.getSelectedParticles();
+            if (!selectedParticles.isEmpty()) {
+                for (int i = 0; i < hitParticles.GetParticleCount(); i++) {
+                    double offsetX = (Math.random() - 0.5) * hitParticles.GetParticleOffsetMultiplier();
+                    double offsetY = (Math.random() - 0.5) * hitParticles.GetParticleOffsetMultiplier();
+                    double offsetZ = (Math.random() - 0.5) * hitParticles.GetParticleOffsetMultiplier();
+                    double speedX = (Math.random() - 0.5) * hitParticles.GetParticleSpeedMultiplier();
+                    double speedY = (Math.random() - 0.5) * hitParticles.GetParticleSpeedMultiplier();
+                    double speedZ = (Math.random() - 0.5) * hitParticles.GetParticleSpeedMultiplier();
+
+
+                    for (BasicParticleType particle : selectedParticles) {
+                        world.addParticle(particle, x + offsetX, y + offsetY, z + offsetZ, speedX, speedY, speedZ);
+                    }
+                }
+            }
+        }
+
         if (this.isInvulnerableTo(source))
         {
             return false;

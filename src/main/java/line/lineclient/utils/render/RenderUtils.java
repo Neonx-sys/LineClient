@@ -271,8 +271,8 @@ public class RenderUtils {
         GL11.glPopMatrix();
     }
 
-    public static class Render3D
-    {
+    public static class Render3D {
+
         public static void drawBlockBox(BlockPos blockPos, int color) {
             drawBox(new AxisAlignedBB(blockPos).offset(-mc.getRenderManager().info.getProjectedView().x, -mc.getRenderManager().info.getProjectedView().y, -mc.getRenderManager().info.getProjectedView().z), color);
         }
